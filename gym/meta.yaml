@@ -1,0 +1,79 @@
+{% set name = "gym" %}
+{% set version = "0.9.4" %}
+{% set file_ext = "tar.gz" %}
+{% set hash_type = "sha256" %}
+{% set hash_value = "94f91ca790bab1243c584bcc3dc5f5e610709e500a554570bdc5464215c13888" %}
+
+package:
+  name: '{{ name|lower }}'
+  version: '{{ version }}'
+
+source:
+  fn: '{{ name }}-{{ version }}.{{ file_ext }}'
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.{{ file_ext }}
+  '{{ hash_type }}': '{{ hash_value }}'
+
+build:
+  number: 0
+  script: python setup.py install --single-version-externally-managed --record=record.txt
+
+requirements:
+  build:
+    - python
+    - setuptools
+    - numpy >=1.10.4
+    - requests >=2.0
+    - six
+    - pyglet >=1.2.0
+  run:
+    - python
+    - numpy >=1.10.4
+    - requests >=2.0
+    - six
+    - pyglet >=1.2.0
+
+test:
+  imports:
+    - gym
+    - gym.benchmarks
+    - gym.benchmarks.tests
+    - gym.envs
+    - gym.envs.algorithmic
+    - gym.envs.algorithmic.tests
+    - gym.envs.atari
+    - gym.envs.board_game
+    - gym.envs.box2d
+    - gym.envs.classic_control
+    - gym.envs.debugging
+    - gym.envs.mujoco
+    - gym.envs.parameter_tuning
+    - gym.envs.safety
+    - gym.envs.tests
+    - gym.envs.toy_text
+    - gym.monitoring
+    - gym.monitoring.tests
+    - gym.scoreboard
+    - gym.scoreboard.client
+    - gym.scoreboard.client.tests
+    - gym.scoreboard.tests
+    - gym.spaces
+    - gym.spaces.tests
+    - gym.utils
+    - gym.wrappers
+    - gym.wrappers.tests
+  requires:
+    - mock
+    - pytest
+
+about:
+  home: https://github.com/openai/gym
+  license: ''
+  license_family: AGPL
+  license_file: ''
+  summary: 'The OpenAI Gym: A toolkit for developing and comparing your reinforcement learning agents.'
+  description: ''
+  doc_url: ''
+  dev_url: ''
+
+extra:
+  recipe-maintainers: ''
